@@ -54,3 +54,15 @@ h1 {
 #top-menu-ul a:hover {
   background-color: #000;
 }
+
+main {
+  padding: 40px;
+  text-align: center;
+}
+
+#home img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}

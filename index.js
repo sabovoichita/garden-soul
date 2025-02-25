@@ -1,5 +1,3 @@
-console.log("Welcome");
-
 function createTitle() {
   return `<h1>The Garden Soul</h1>`;
 }
@@ -26,8 +24,36 @@ function createMenuBar() {
       </div>
       `;
 }
+function createHomePage() {
+  return `
+        <section id="home">
+          <h2>💌 Welcome to The Garden Soul!</h2>
+          <p>✅ Your one-stop shop for unique and personalized  garden gifts.</p>
+          <img src="images/logo/home-banner.jpg" alt="Banner" />
+        </section>
+        `;
+}
+
+function loadPage(page) {
+  const main = document.getElementById("main");
+  if (page === "home") {
+    main.innerHTML = createHomePage();
+  } else {
+    console.log("creating page");
+    main.innerHTML = `<h2>${page} page is under construction</h2>`;
+  }
+}
 
 function initEvents() {
-  document.body.innerHTML = createHeader();
+  document.body.innerHTML = createHeader() + `<main id="main"></main>`;
+  loadPage("home");
+  document
+    .getElementById("top-menu-ul")
+    .addEventListener("click", function (e) {
+      if (e.target.tagName === "A") {
+        const page = e.target.getAttribute("data-page");
+        loadPage(page);
+      }
+    });
 }
 initEvents();
