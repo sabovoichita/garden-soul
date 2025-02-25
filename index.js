@@ -1,3 +1,67 @@
+let cart = [];
+
+function showNotification(message) {
+  const notification = document.createElement("div");
+  notification.classList.add("cart-notification");
+  notification.textContent = message;
+  document.body.appendChild(notification);
+  setTimeout(() => {
+    notification.style.opacity = "1";
+  }, 100);
+
+  setTimeout(() => {
+    notification.style.opacity = "0";
+    setTimeout(() => {
+      notification.remove();
+    }, 500);
+  }, 2000);
+}
+
+function updateCartUI() {
+  const cartItems = document.getElementById("cartItems");
+  if (cartItems) {
+    cartItems.innerHTML = "";
+    cart.forEach((item, index) => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+          <img src="${item.image}" alt="${item.name}" height="50px"/>
+          <span>${item.name} (x ${item.quantity} pieces)</span>
+          <button onclick="removeFromCart(${index})">❌ Remove</button>
+        `;
+      cartItems.appendChild(li);
+    });
+  }
+}
+
+function sendOrderToWhatsApp() {
+  if (cart.length === 0) {
+    alert("Your cart is empty!");
+    return;
+  }
+
+  let customerName = prompt("Enter your name:");
+  let customerAddress = prompt("Enter your address:");
+  let customerPhone = prompt("Enter your phone number:");
+
+  if (!customerName || !customerAddress || !customerPhone) {
+    alert("Please fill in all details before placing an order.");
+    return;
+  }
+
+  let message = `🛍 *New Order from The Garden Soult!*\n\n`;
+  cart.forEach((item, index) => {
+    message += `${index + 1}. ${item.name} (x${item.quantity})\n`;
+  });
+
+  message += `\n📞 *Customer Details:*\n- Name: ${customerName}\n- Address: ${customerAddress}\n- Phone: ${customerPhone}`;
+
+  const encodedMessage = encodeURIComponent(message);
+  const phone = "0034642771871";
+  const whatsappURL = `https://wa.me/${phone}?text=${encodedMessage}`;
+
+  window.open(whatsappURL, "_blank");
+}
+
 function showCategory(category) {
   const allSections = document.querySelectorAll(".productCategory");
 
@@ -95,25 +159,25 @@ function createProductsPage() {
         <option value="cocos">🐔 Cocos</option>
         <option value="copac">🌳 Copac</option>
         <option value="cos">🧺 Cos</option>
-        <option value="craniu">💀 craniu</option>
-        <option value="doamna">👩doamna</option>
-        <option value="extraterestru">👽 extraterestru</option>
-        <option value="icoana">🖼 icoana</option>
-        <option value="iepuras">🐰 iepuras</option>
-        <option value="ingeras">👼 ingeras</option>
-        <option value="lady">💃 lady</option>
+        <option value="craniu">💀 Craniu</option>
+        <option value="doamna">👩Doamna</option>
+        <option value="extraterestru">👽 Extraterestru</option>
+        <option value="icoana">🖼 Icoana</option>
+        <option value="iepuras">🐰 Iepuras</option>
+        <option value="ingeras">👼 Ingeraș</option>
+        <option value="lady">💃 Lady</option>
         <option value="lebada">🦢 Lebada</option>
-        <option value="leu">🦁 leu</option>
-        <option value="magar">🦄 magar</option>
-        <option value="mistret">🐗 mistret</option>
-        <option value="pisica">😻 pisica</option>
-        <option value="pitici"> pitici</option>
-        <option value="poneu">🐴 poneu</option>
-        <option value="porumbel">🕊 porumbel</option>
-        <option value="rata">🦆 rata</option>
-        <option value="trunchi">🌴 trunchi</option>
-        <option value="uliu">🦅 uliu</option>
-        <option value="veverita">🐿 veverita</option>
+        <option value="leu">🦁 Leu</option>
+        <option value="magar">🦄 Măgar</option>
+        <option value="mistret">🐗 Mistret</option>
+        <option value="pisica">😻 Pisica</option>
+        <option value="pitici">🎭 Pitici</option>
+        <option value="poneu">🐴 Poneu</option>
+        <option value="porumbel">🕊 Porumbel</option>
+        <option value="rata">🦆 Rata</option>
+        <option value="trunchi">🌴 Trunchi</option>
+        <option value="uliu">🦅 Uliu</option>
+        <option value="veverita">🐿 Veverita</option>
       </select>
       <div id="productsContainer">
         ${generateCategorySection("absolvent", 9)}
@@ -150,12 +214,61 @@ function createProductsPage() {
     `;
 }
 
+function createOrdersPage() {
+  return `
+      <section id="orders">
+        <h2>🛒 Your Orders are here!</h2>
+        <p>🥂 Thank you for shopping with us!</p>
+        <div id="cart">
+          <h3>🛍 Your Cart</h3>
+          <ul id="cartItems"></ul>
+          <button id="placeOrder">✅ Place Order</button>
+        </div>
+      </section>
+      `;
+}
+
+function addToCart(category, index) {
+  const productName = `${
+    category.charAt(0).toUpperCase() + category.slice(1)
+  } ${index}`;
+  const existingItem = cart.find(
+    (item) => item.category === category && item.index === index
+  );
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    cart.push({
+      category: category,
+      index: index,
+      name: productName,
+      image: `images/${category}/${category}-${index}.jpg`,
+      quantity: 1,
+    });
+  }
+
+  updateCartUI();
+  showNotification(`${productName} added to cart!`);
+}
+
+function removeFromCart(index) {
+  if (cart[index].quantity > 1) {
+    cart[index].quantity -= 1;
+  } else {
+    cart.splice(index, 1);
+  }
+  updateCartUI();
+}
+
 function loadPage(page) {
   const main = document.getElementById("main");
   if (page === "home") {
     main.innerHTML = createHomePage();
   } else if (page === "products") {
     main.innerHTML = createProductsPage();
+  } else if (page === "orders") {
+    main.innerHTML = createOrdersPage();
+    updateCartUI();
   } else {
     console.log("creating page");
     main.innerHTML = `<h2>${page} page is under construction</h2>`;
@@ -173,5 +286,15 @@ function initEvents() {
         loadPage(page);
       }
     });
+
+  document.addEventListener("click", function (e) {
+    if (e.target.classList.contains("addToCart")) {
+      const category = e.target.getAttribute("data-category");
+      const index = e.target.getAttribute("data-index");
+      addToCart(category, index);
+    } else if (e.target.id === "placeOrder") {
+      sendOrderToWhatsApp();
+    }
+  });
 }
 initEvents();
