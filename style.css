@@ -5,34 +5,40 @@ body {
   letter-spacing: 2px;
   margin: 0;
   padding: 0;
-  background-color: #000;
-  color: #fff;
+  background-color: #292323;
+  color: #e8a439;
 }
+
 header {
-  background-color: #8f8317;
+  background-color: #282323;
   padding: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
+
 header img {
   height: 100px;
   border-radius: 50%;
   padding: 10px;
 }
+
 h1 {
-  color: rgb(42, 238, 42);
+  color: #e8a439;
   margin: 0;
   font-size: 2rem;
 }
+
 #logo-wrapper {
-  border: 6px solid white;
+  border: 6px solid #e8a439;
   border-radius: 50%;
 }
+
 #top-menu {
-  background-color: #8f8317;
+  background-color: #282323;
   padding: 10px;
 }
+
 #top-menu-ul {
   list-style: none;
   padding: 0;
@@ -40,19 +46,48 @@ h1 {
   justify-content: center;
   gap: 20px;
 }
+
 #top-menu-ul li {
   display: inline;
 }
+
 #top-menu-ul a {
   text-decoration: none;
-  color: white;
+  color: #e8a439;
   font-weight: bold;
   padding: 10px 15px;
   border-radius: 5px;
-  transition: background 0.3s ease-in-out;
+  position: relative;
+  transition: color 0.3s ease-in-out;
 }
+
+#top-menu-ul a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 3px;
+  background: #e8a439;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease-in-out;
+}
+
 #top-menu-ul a:hover {
-  background-color: #000;
+  color: #ffc966;
+  transform: scale(1.05);
+}
+#top-menu-ul a:hover::after {
+  transform: scaleX(1);
+}
+
+#top-menu-ul a:active {
+  color: #ffc966;
+  font-weight: bold;
+}
+#top-menu-ul a.active::after {
+  transform: scaleX(1);
 }
 
 main {
@@ -60,9 +95,270 @@ main {
   text-align: center;
 }
 
+section {
+  background-color: #282223;
+  padding: 30px;
+  border-radius: 10px;
+  margin: 20px auto;
+  width: 80%;
+  box-shadow: 0 0 15px rgba(232, 164, 57, 0.5);
+}
+
+section h2 {
+  color: #e8a439;
+}
+
 #home img {
   max-width: 100%;
   height: auto;
   display: block;
   margin: 0 auto;
+}
+
+button {
+  font-family: "The Girl Next Door", serif;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #fff;
+  background: linear-gradient(135deg, #e8a439, #a67c00);
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 10px rgba(232, 164, 57, 0.3);
+}
+
+button:hover {
+  background: linear-gradient(135deg, #ffd700, #e8a439);
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(232, 164, 57, 0.5);
+}
+
+button:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 5px rgba(232, 164, 57, 0.5);
+}
+
+.category-tabs {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 10px 0;
+  background: #272223;
+  border-bottom: 3px solid #e8a439;
+  scrollbar-width: thin;
+  scrollbar-color: #e8a439 #272223;
+}
+
+.category-tabs::-webkit-scrollbar {
+  height: 6px;
+}
+
+.category-tabs::-webkit-scrollbar-thumb {
+  background: #e8a439;
+  border-radius: 10px;
+}
+
+.category-tabs::-webkit-scrollbar-track {
+  background: #272223;
+}
+
+.category-tab {
+  flex: 0 0 auto;
+  padding: 10px 18px;
+  margin: 0 6px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background: #282323;
+  border: 2px solid #e8a439;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.category-tab.active {
+  background: #e8a439;
+  color: #000;
+  border-color: #fff;
+  box-shadow: 0px 3px 6px rgba(232, 164, 57, 0.4);
+}
+
+.category-tab:hover {
+  background: #ffc966;
+  color: black;
+  border-color: #fff;
+}
+
+.productGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.productCard {
+  width: 220px;
+  border: 1px solid #e8a439;
+  border-radius: 8px;
+  text-align: center;
+  padding: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  background: #282223;
+}
+
+.productImgWrap img {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.productDetails h3 {
+  margin-top: 10px;
+  font-size: 1.1em;
+  color: #e8a439;
+}
+
+.cart-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #e8a439, #282223);
+  color: #fff;
+  font-weight: bold;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(232, 164, 57, 0.3);
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  z-index: 1000;
+}
+
+#cartItems {
+  list-style: none;
+  padding: 0;
+}
+
+#cartItems li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e8a439;
+  padding: 10px 0;
+}
+
+#cartItems img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+#cartItems button {
+  background-color: #e8a439;
+  color: black;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+#cartItems button:hover {
+  background-color: #ffc966;
+}
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  main {
+    padding: 20px;
+  }
+
+  section {
+    width: 95%;
+    padding: 20px;
+  }
+
+  header {
+    flex-direction: column;
+    padding: 15px;
+    text-align: center;
+  }
+
+  header img {
+    height: 80px;
+    padding: 5px;
+  }
+
+  #logo-wrapper {
+    border-width: 4px;
+  }
+
+  #top-menu {
+    padding: 8px;
+  }
+
+  #top-menu-ul {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  #top-menu-ul a {
+    display: block;
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .category-tabs {
+    padding: 8px 0;
+    font-size: 14px;
+    gap: 5px;
+  }
+
+  .category-tab {
+    font-size: 12px;
+    padding: 8px 12px;
+    margin: 0 3px;
+  }
+
+  .productGrid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .productCard {
+    width: 90%;
+    max-width: 250px;
+  }
+
+  #cartItems li {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  #cartItems img {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 5px;
+  }
+
+  #cartItems button {
+    font-size: 12px;
+    padding: 5px;
+  }
+
+  button {
+    font-size: 1rem;
+    padding: 8px 10px;
+  }
 }
