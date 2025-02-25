@@ -285,6 +285,16 @@ function loadPage(page) {
 function initEvents() {
   document.body.innerHTML = createHeader() + `<main id="main"></main>`;
   loadPage("home");
+
+  document.body.insertAdjacentHTML(
+    "afterbegin",
+    `<button id="menu-toggle">☰</button>`
+  );
+
+  document.getElementById("menu-toggle").addEventListener("click", function () {
+    document.getElementById("top-menu").classList.toggle("active");
+  });
+
   document
     .getElementById("top-menu-ul")
     .addEventListener("click", function (e) {
@@ -304,4 +314,5 @@ function initEvents() {
     }
   });
 }
+
 initEvents();
